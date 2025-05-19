@@ -1,0 +1,50 @@
+
+  .floating-bubble {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: linear-gradient(145deg, #ffffff, #d1d1d1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: floatBubble 6s ease-in-out infinite alternate;
+  }
+
+  @keyframes floatBubble {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(20px, 20px); }
+  }
+
+  .bubble-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .bubble-gloss {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.5), transparent 60%);
+    pointer-events: none;
+  }
+
+  .splash-decoration {
+    width: 250px;
+    height: auto;
+    opacity: 0.7;
+    animation: splashFloat 8s ease-in-out infinite alternate;
+  }
+
+  .splash-image {
+    width: 100%;
+    height: auto;
+  }
+
+  @keyframes splashFloat {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(-10px, -10px) rotate(5deg); }
+  }
+
