@@ -27,7 +27,7 @@ const JobDetails = () => {
     const applicantId = localStorage.getItem('applicantId');
 
     if (!token || !applicantId) {
-      alert("You must be logged in to apply for a job.");
+
       navigate(`/JobApplication/${id}`);
       return;
     }

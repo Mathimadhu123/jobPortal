@@ -62,6 +62,7 @@ const MyApplications = () => {
                 <p className="card-text"><strong>Company:</strong> {app.jobId?.company || 'N/A'}</p>
                 <p className="card-text"><strong>Applied At:</strong> {new Date(app.appliedAt).toLocaleString()}</p>
                 <p className="card-text"><strong>Cover Letter:</strong> {app.coverLetter || 'None provided'}</p>
+          
                 <a
                   href={`http://localhost:8000/uploads/resumes/${app.resume}`}
                   target="_blank"

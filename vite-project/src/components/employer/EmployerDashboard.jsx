@@ -1,99 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const EmployerDashboard = () => {
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    salary: '',
-    location: '',
-    company: '',
-    type: '',
-    category: ''
-  });
-
-  const handleChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem('token');
-
-    try {
-      const res = await axios.post('http://localhost:8000/job/create', formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      alert(res.data.message || "Job posted successfully!");
-      setFormData({
-        title: '',
-        description: '',
-        salary: '',
-        location: '',
-        company: '',
-        type: '',
-        category: ''
-      });
-
-    } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.message || "Error creating job");
-    }
-  };
-
   return (
     <div className="container mt-5">
-      <h2 className="text-center mb-4">Employer Dashboard</h2>
+      <h2 className="text-center mb-4 fw-bold">Employer Dashboard</h2>
 
-      <div className="card shadow p-4">
-        <h4 className="mb-3">Post a New Job</h4>
-        <form onSubmit={handleSubmit}>
-          <div className="row">
-            {["title", "description", "salary", "location", "company", "type", "category"].map((field, idx) => (
-              <div className="mb-3 col-md-6" key={idx}>
-                <label className="form-label text-capitalize">{field}</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name={field}
-                  value={formData[field]}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-            ))}
+      <div className="row justify-content-center">
+        <div className="col-md-4 mb-3">
+          <div className="card shadow-sm border-0 h-100">
+            <div className="card-body text-center">
+              <h5 className="card-title">Post a Job</h5>
+              <p className="card-text text-muted">Create and publish a new job listing.</p>
+              <Link to="/employerDashboard/PostJobForm" className="btn btn-primary">
+                Go
+              </Link>
+            </div>
           </div>
+        </div>
 
-          <div className="d-grid">
-            <button type="submit" className="btn btn-primary">Post Job</button>
+        <div className="col-md-4 mb-3">
+          <div className="card shadow-sm border-0 h-100">
+            <div className="card-body text-center">
+              <h5 className="card-title">View My Jobs</h5>
+              <p className="card-text text-muted">Manage and update your posted jobs.</p>
+              <Link to="/employerDashboard/ViewJobs" className="btn btn-primary">
+                Go
+              </Link>
+            </div>
           </div>
-        </form>
+        </div>
+
+        <div className="col-md-4 mb-3">
+          <div className="card shadow-sm border-0 h-100">
+            <div className="card-body text-center">
+              <h5 className="card-title">View Applicants</h5>
+              <p className="card-text text-muted">Check who has applied to your jobs.</p>
+              <Link to="/employerDashboard/ViewApplicants" className="btn btn-primary">
+                Go
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
 
-const ProtectedEmployerDashboard = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const role = localStorage.getItem('role');
-
-    if (!token || role !== 'employer') {
-      alert('Access denied. Employers only!');
-      navigate('/auth'); // redirect to login
-    }
-  }, [navigate]);
-
-  return <EmployerDashboard />;
-};
-
-export default ProtectedEmployerDashboard;
+export default EmployerDashboard;

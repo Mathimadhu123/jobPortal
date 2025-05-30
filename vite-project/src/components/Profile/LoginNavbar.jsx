@@ -5,7 +5,7 @@ import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Profile/AuthContext';
 
 const LoginNavbar = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
   const { user, setUser } = useContext(AuthContext);
   // console.log(AuthContext);
   // console.log(user);

@@ -18,9 +18,17 @@ const Register = () => {
         password,
         role,
       });
+      const { user } = response.data;
 
       alert('Registration Successful! Please Login.');
-      navigate('/Home'); // Back to auth page (Login tab)
+      navigate('/home')
+      if(user.role === 'employer'){
+        navigate('/employerDashboard');
+      }
+      else {
+        navigate('/home');
+      }
+
     } catch (error) {
       console.error('Registration failed:', error);
       alert('Registration Failed!');

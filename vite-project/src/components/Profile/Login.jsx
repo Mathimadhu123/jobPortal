@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from './AuthContext'; // adjust this path if needed
+import { AuthContext } from './AuthContext'; // adjust the path if needed
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,12 +12,12 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // ✅ Clear any old token or user from localStorage
+    // Clear any old token or user from localStorage
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('role');
 
     try {
-      // Send login request
       const response = await axios.post('http://localhost:8000/user/login', {
         email,
         password
@@ -25,15 +25,23 @@ const Login = () => {
 
       const { token, user } = response.data;
 
-      // ✅ Store new token and user info
+      // Store new token and user info
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('role', user.role); //  Save role separately
 
-      // Set user context
+      // Update context
       setUser(user);
-
+      
       alert('Login Successful!');
-      navigate('/Home');
+
+      // Navigate to correct dashboard
+      if (user.role === 'employer') {
+        navigate('/employerDashboard'); //  Only one redirect
+      } else {
+        navigate('/home');
+      }
+
     } catch (error) {
       console.error('Login failed:', error);
       alert('Invalid Credentials!');
@@ -42,7 +50,6 @@ const Login = () => {
 
   return (
     <div className="container mt-3">
-
       <form onSubmit={handleLogin}>
         <div className="mb-3">
           <label className="form-label">Email address</label>
@@ -72,7 +79,6 @@ const Login = () => {
           Login
         </button>
       </form>
-
     </div>
   );
 };

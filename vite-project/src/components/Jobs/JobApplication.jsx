@@ -30,7 +30,6 @@ const JobApplication = () => {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      alert('Please login to apply for jobs.');
       return navigate('/login');
     }
     if (!resume) {
@@ -69,7 +68,7 @@ const JobApplication = () => {
   };
 
   if (error) return <div className="alert alert-danger text-center mt-4">{error}</div>;
-  if (!job)   return <p className="text-center mt-4">Loading job details...</p>;
+  if (!job) return <p className="text-center mt-4">Loading job details...</p>;
 
   return (
     <div className="container mt-5">
@@ -78,6 +77,17 @@ const JobApplication = () => {
         <p className="text-muted">{job.company}</p>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="mb-3">
+
+            <div className="input-group mb-3 ">
+              <label htmlFor="name" className="input-group-text input-sm">Name:</label>
+              <input
+                type="text"
+                id="name"
+                className="form-control"
+                placeholder="Enter your name"
+                aria-describedby="basic-addon2"
+              />
+            </div>
             <label htmlFor="resume" className="form-label">Upload Resume</label>
             <input
               type="file"
